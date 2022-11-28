@@ -1,18 +1,17 @@
-const { ifError } = require('assert');
-const User = require('../models');
+const {User, Thought} = require('../models');
 
 const userContoller = {
     // creating a new user
     createUser({body}, res){
         User.create(body)
-        .then(user=> res.json(user))
-        .catch(err => res.status(400).json(err))
+        .then(user => {res.json(user)})
+        .catch(err => {res.status(400).json(err)})
     },
     // get all user
     getUsers(req, res) {
         User.find({})
-        .then((user) => res.json(user))
-        .catch((err) => res.status(500).json(err));
+        .then((user) => {res.json(user)})
+        .catch((err) => {res.status(500).json(err)});
     },
     // get single user
     getOneUser (req,res) {
