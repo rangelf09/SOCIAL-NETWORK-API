@@ -58,6 +58,42 @@ const userContoller = {
             res.status(500).json(err);
         });
     },
+    // add friends
+    addFriends (req,res) {
+        User.FindOneAndUpdate (
+            {_id: req.params.userId},
+            {$addToSet: {friends: req.params.friendId}},
+            {runValidators: true, new:true}
+        )
+        .then((user) =>{
+            if(!user) {
+                return res.status(404).json({ message: 'No id found!'});
+            }
+            res.json(user);
+        })
+        .catch((err) =>{
+            console.log(err);
+            res.status(500).json(err);
+        });
+    },
+    // remove friends
+    removeFriends (req,res) {
+        User.FindOneAndUpdate (
+            {_id: req.params.userId},
+            {$pull: {friends: req.params.friendId}},
+            {runValidators: true, new:true}
+        )
+        .then((user) =>{
+            if(!user) {
+                return res.status(404).json({ message: 'No id found!'});
+            }
+            res.json(user);
+        })
+        .catch((err) =>{
+            console.log(err);
+            res.status(500).json(err);
+        });
+    },
 };
 
 module.exports = userContoller;
