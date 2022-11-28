@@ -12,11 +12,11 @@ createThought (req, res) {
             {new: true}
         );
     })
-    .then((thought)=>{
-    if(!thought) {
-        return res.status(400).json({message: 'No user ound with this id!'})
+    .then((user)=>{
+    if(!user) {
+        return res.status(400).json({message: 'No user found with this id!'})
     }
-    res.json(thought);
+    res.json({messgae: 'Created thought'});
 })
 .catch((err) => {
     console.log(err);
@@ -39,7 +39,6 @@ getThoughts(req, res) {
 // get single thought
 getOneThought (req, res) {
     Thought.findOne({ _id:req.params.thoughtId})
-    .select('-__V')
     .then((thought) => {
         if(!thought) {
             return res.status(400).json({message: 'No thought with this id!'})
@@ -57,7 +56,7 @@ updateThought (req, res) {
     Thought.findOneAndUpdate(
         {_id: req.params.thoughtId},
         {$set: req.body},
-        {new: true}
+        {runValidators: true, new: true}
     )
    .then((thought)=>{
     if(!thought) {
