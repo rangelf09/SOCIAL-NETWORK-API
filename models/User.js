@@ -14,15 +14,15 @@ const schemaUser = new Schema (
             unique: true,
             match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, 'Does not match any email'],
         },
-        thoughts:[
+        thought:[
              {
-            type: Schema.Types.array_id,
+            type: Schema.Types.ObjectId,
             reference: 'Thought'
         },
     ],
         friends: [
             {
-            type: Schema.Types.array_id,
+            type: Schema.Types.ObjectId,
             reference: 'User'
         },
     ],
