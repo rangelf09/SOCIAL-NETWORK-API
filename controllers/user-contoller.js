@@ -2,25 +2,30 @@ const {User, Thought} = require('../models');
 
 const userContoller = {
     // creating a new user
-    createUser({body}, res){
-        User.create(body)
-        .then(user => {res.json(user)})
-        .catch(err => {res.status(400).json(err)})
+    createUser(req, res){
+        User.create(req.body)
+        .then(user => {
+            res.json(user);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        });
     },
     // get all user
     getUsers(req, res) {
         User.find()
         .then((user) => {
-            res.json(user)
+            res.json(user);
         })
         .catch((err) => {
-            console.log(err)
-            res.status(500).json(err)
+            console.log(err);
+            res.status(500).json(err);
         });
     },
     // get single user
     getOneUser (req,res) {
-        User.findOne({id: req.parsms.userId})
+        User.findOne({_id: req.parsms.userId})
         .populate('though')
         .populate('friends')
         .select('-__V')
@@ -31,13 +36,14 @@ const userContoller = {
             res.json(user);
         })
         .catch((err) =>{
+            console.log(err);
             res.status(500).json(err);
         });
     },
     // update user
     updateUser (req,res) {
         User.findOneAndUpdate(
-            {id: req.parsms.userId},
+            {_id: req.parsms.userId},
             {$set:req.body},
             {runValidators: true, new:true}
         )
