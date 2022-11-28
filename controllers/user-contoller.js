@@ -9,9 +9,14 @@ const userContoller = {
     },
     // get all user
     getUsers(req, res) {
-        User.find({})
-        .then((user) => {res.json(user)})
-        .catch((err) => {res.status(500).json(err)});
+        User.find()
+        .then((user) => {
+            res.json(user)
+        })
+        .catch((err) => {
+            console.log(err)
+            res.status(500).json(err)
+        });
     },
     // get single user
     getOneUser (req,res) {
